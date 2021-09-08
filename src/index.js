@@ -15,6 +15,7 @@ $(document).ready(function() {
   $('#weatherLocation').click(function() {
     let earth_date = $('#date').val();
     clearFields();
+    
     let promise = MarsCam.getMarsCam(earth_date);
     promise.then(function(response) {
       const body = JSON.parse(response);
@@ -26,8 +27,8 @@ $(document).ready(function() {
     let promise1 = MarsCam.getAPOD(earth_date);
     promise1.then(function(response) {
       const body = JSON.parse(response);
-      $(".showAPOD").append(`<img src='` + body.hdurl + `'/><br>
-      <p>Explanation: ` + body.explanation + `</p>`);
+      $(".showAPOD").append(`<img src='` + body.hdurl + `'style='height:600px;'/><br>
+      <p class="card">Explanation: ` + body.explanation + `</p>`);
     });
 
     let promise2 = MarsCam.getDONKI();
@@ -38,9 +39,9 @@ $(document).ready(function() {
         i = body.length - 3;
       }
       while (i < body.length) {
-        $(".showDONKI").append(`<p>Flare Name: ` + body[i].instruments[0].displayName + `</p>`);
-        $(".showDONKI").append(`<p>Peak Time: ` + body[i].peakTime + `</p>`);
-        $(".showDONKI").append(`<p>Flare Class: ` + body[i].classType + `</p>`);
+        $(".showDONKI").append(`<h5>Flare Name: ` + body[i].instruments[0].displayName + `</h5>`);
+        $(".showDONKI").append(`<li>Peak Time: ` + body[i].peakTime + `</li>`);
+        $(".showDONKI").append(`<li>Flare Class: ` + body[i].classType + `</li>`);
         i++;
       }
     });
