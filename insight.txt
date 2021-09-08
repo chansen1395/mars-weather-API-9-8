@@ -1,0 +1,86 @@
+https://eonet.sci.gsfc.nasa.gov/api/v2.1/events
+
+https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?
+
+https://api.nasa.gov/DONKI/FLR?&api_key=Ji6Ufyk1q10NXJEEbBihY3vMxL39DgUT9O9AtRPa
+
+{
+    "sol_keys": [],
+    "validity_checks": {
+        "981": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "valid": false
+            }
+        },
+        "982": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    3,
+                    4,
+                    5
+                ],
+                "valid": false
+            }
+        },
+        "984": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "valid": false
+            }
+        },
+        "985": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    4,
+                    5,
+                    6
+                ],
+                "valid": false
+            }
+        },
+        "986": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    2,
+                    3,
+                    4,
+                    5
+                ],
+                "valid": false
+            }
+        },
+        "987": {
+            "PRE": {
+                "sol_hours_with_data": [
+                    3,
+                    4,
+                    5,
+                    6
+                ],
+                "valid": false
+            }
+        },
+        "sol_hours_required": 18,
+        "sols_checked": [
+            "981",
+            "982",
+            "984",
+            "985",
+            "986",
+            "987"
+        ]
+    }
+}

@@ -2,80 +2,47 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import WeatherService from './weather-service.js'
+import MarsCam from './mars-cam.js';
 
 function clearFields() {
   $('#location').val("");
-  $('.showErrors').text("");
-  $('.showHumidity').text("");
-  $('.showTemp').text("");
+  $('.showAPOD').text("");
+  $('.showMarsCam').text("");
+  $('.showDONKI').text("");
 }
 
 $(document).ready(function() {
   $('#weatherLocation').click(function() {
-    let city = $('#location').val();
+    let earth_date = $('#date').val();
     clearFields();
-    let promise = WeatherService.getWeather(city);
+    let promise = MarsCam.getMarsCam(earth_date);
     promise.then(function(response) {
       const body = JSON.parse(response);
-      $('.showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
-      $('.showTemp').text(`The temperature in Kelvins is ${body.main.temp} degrees.`);
+      $(".showMarsCam").append(`<img src='` + body.photos[0].img_src + `'style='height:350px; width:400px;'/>`);
     }, function(error) {
       $('.showErrors').text(`There was an error processing your request: ${error}`);
     });
+    
+    let promise1 = MarsCam.getAPOD(earth_date);
+    promise1.then(function(response) {
+      const body = JSON.parse(response);
+      $(".showAPOD").append(`<img src='` + body.hdurl + `'/><br>
+      <p>Explanation: ` + body.explanation + `</p>`);
+    });
+
+    let promise2 = MarsCam.getDONKI();
+    promise2.then(function(response) {
+      const body = JSON.parse(response);
+      let i = 0;
+      if (body.length > 3) {
+        i = body.length - 3;
+      }
+      while (i < body.length) {
+        $(".showDONKI").append(`<p>Flare Name: ` + body[i].instruments[0].displayName + `</p>`);
+        $(".showDONKI").append(`<p>Peak Time: ` + body[i].peakTime + `</p>`);
+        $(".showDONKI").append(`<p>Flare Class: ` + body[i].classType + `</p>`);
+        i++;
+      }
+    });
   });
 });
-
-
-
-//************ OLD CODE *********
-// import $ from 'jquery';
-// import 'bootstrap';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import './css/styles.css';
-
-// $(document).ready(function() {
-//   $('#weatherLocation').click(function() {
-//     let city = $('#location').val();
-//     $('#location').val("");
-
-// // New code begins here.
-
-//     let promise = new Promise(function(resolve, reject) {
-//       let request = new XMLHttpRequest();
-//       const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
-//       request.onload = function() {
-//         if (this.status === 200) {
-//           resolve(request.response);
-//         } else {
-//           reject(request.response);
-//         }
-//       }
-//       request.open("GET", url, true);
-//       request.send();
-//     });
-
-//     promise.then(function(response) {
-//       const body = JSON.parse(response);
-//       $('.showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
-//       $('.showTemp').text(`The temperature in Kelvins is ${body.main.temp} degrees.`);
-//       $('.showErrors').text("");
-//     }, function(error) {
-//       $('.showErrors').text(`There was an error processing your request: ${error}`);
-//       $('.showHumidity').text("");
-//       $('.showTemp').text("");
-//     });
-//   });
-// });
-// **************************
-
-
-
-//     function getElements(response) {
-//       $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
-//       $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
-//       $('.showFarenheit').text(`The temperature in Farenheit is ${((response.main.temp - 273.15) * 9/5 + 32).toFixed(1)} degrees.`);
-//       $('.showDescription').text(`Description: ${response.weather[0].description}`);
-//     }
-//   });
-// });
